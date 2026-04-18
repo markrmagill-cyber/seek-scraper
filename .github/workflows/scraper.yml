@@ -20,12 +20,5 @@ jobs:
           npm install playwright typescript ts-node @types/node
           npx playwright install chromium --with-deps
           
-      - name: Install Ollama
-        run: |
-          curl -fsSL https://ollama.ai/install.sh | sh
-          ollama serve &
-          sleep 15
-          ollama pull llama3.2:1b
-          
       - name: Run Scraper
         run: npx ts-node --project tsconfig.json seek-scraper.ts
