@@ -1,19 +1,19 @@
 name: Seek Scraper
 on:
   schedule:
-    - cron: '0 17 * * *'  # 3am Sydney AEST
-  workflow_dispatch:  # Manual run button
+    - cron: '0 17 * * *'
+  workflow_dispatch:
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           
       - name: Install dependencies
         run: |
@@ -24,11 +24,8 @@ jobs:
         run: |
           curl -fsSL https://ollama.ai/install.sh | sh
           ollama serve &
-          sleep 10
+          sleep 15
           ollama pull llama3.2:1b
           
       - name: Run Scraper
-        env:
-          API_URL: https://api.yesjobs.com.au/api/seek-import/jobs
-          API_KEY: yesjobs-seek-key-2024
-        run: npx ts-node seek-scraper.ts
+        run: npx ts-node --project tsconfig.json seek-scraper.ts
