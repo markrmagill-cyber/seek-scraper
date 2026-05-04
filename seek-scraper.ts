@@ -164,6 +164,13 @@ async function scrapeSeekJobs() {
 
       try {
         await page.goto(seekUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
+        // Wait for Cloudflare challenge to pass
+        await page.waitForTimeout(5000);
+        const title = await page.title();
+        if (title.includes("moment") || title.includes("Just a")) {
+          console.log("Cloudflare detected - waiting 15 seconds...");
+          await page.waitForTimeout(15000);
+        }
         await randomDelay(2000, 3000);
       } catch(e: any) {
         console.log("Page load failed - moving to next category");
