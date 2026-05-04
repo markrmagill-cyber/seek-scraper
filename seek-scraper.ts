@@ -125,8 +125,8 @@ async function scrapeSeekJobs() {
     headless: true,
     proxy: {
       server: "http://p.webshare.io:80",
-      username: "hfyqlaym-au-5",
-      password: "7iz9d8vsyslp"
+      username: process.env.PROXY_USERNAME || "hfyqlaym-au-5",
+      password: process.env.PROXY_PASSWORD || "7iz9d8vsyslp"
     },
     args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage", "--disable-blink-features=AutomationControlled"]
   });
