@@ -6,7 +6,7 @@ on:
 
 jobs:
   scrape:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       
@@ -17,12 +17,12 @@ jobs:
           
       - name: Install dependencies
         run: |
-          npm install playwright typescript ts-node @types/node
+          npm install playwright playwright-extra puppeteer-extra-plugin-stealth typescript ts-node @types/node
           npx playwright install chromium --with-deps
 
       - name: Test Seek Access
         run: |
-          curl -s -o /dev/null -w "%{http_code}" https://www.seek.com.au/jobs
+          echo "HTTP Code: $(curl -s -o /dev/null -w "%{http_code}" -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" https://www.seek.com.au/jobs)"
           
       - name: Run Scraper
         run: npx ts-node --project tsconfig.json seek-scraper.ts
