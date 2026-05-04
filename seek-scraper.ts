@@ -2,7 +2,7 @@ import { chromium } from "playwright";
 
 const API_URL = "https://api.yesjobs.com.au/api/seek-import/jobs";
 const API_KEY = "yesjobs-seek-key-2024";
-const JOBS_PER_RUN = 1000;
+const JOBS_PER_RUN = 1;
 const BATCH_SIZE = 3;
 
 const CATEGORIES = [
@@ -123,6 +123,11 @@ async function scrapeSeekJobs() {
 
   const browser = await chromium.launch({
     headless: true,
+    proxy: {
+      server: "http://p.webshare.io:80",
+      username: "hfyqlaym-au-5",
+      password: "7iz9d8vsyslp"
+    },
     args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage", "--disable-blink-features=AutomationControlled"]
   });
 
