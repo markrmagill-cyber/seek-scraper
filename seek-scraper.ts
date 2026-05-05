@@ -187,8 +187,10 @@ async function scrapeSeekJobs() {
         continue;
       }
 
+      // Wait for jobs to load
+      await page.waitForTimeout(3000);
       const jobLinks = await page.evaluate(() => {
-        const links = document.querySelectorAll("a");
+        const links = document.querySelectorAll("a[href*='/job/']");
         const urls: string[] = [];
         links.forEach((a: any) => {
           const href = a.href || "";
@@ -197,6 +199,13 @@ async function scrapeSeekJobs() {
             if (!urls.includes(clean)) urls.push(clean);
           }
         });
+        // Also try data-automation links
+        if (urls.length === 0) {
+          document.querySelectorAll("[data-automation='job-list-item'] a").forEach((a: any) => {
+            const href = a.href || "";
+            if (href && !urls.includes(href)) urls.push(href.split("?")[0]);
+          });
+        }
         return urls.slice(0, 22);
       });
 
