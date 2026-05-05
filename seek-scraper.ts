@@ -188,7 +188,15 @@ async function scrapeSeekJobs() {
       }
 
       // Wait for jobs to load
-      await page.waitForTimeout(3000);
+      await page.waitForTimeout(5000);
+      // Debug - count all links
+      const allLinks = await page.evaluate(() => {
+        const all = document.querySelectorAll("a[href]");
+        const jobLinks = Array.from(all).filter((a: any) => a.href.includes("/job/"));
+        console.log("Total links: " + all.length + ", Job links: " + jobLinks.length);
+        return jobLinks.slice(0,3).map((a: any) => a.href);
+      });
+      console.log("Sample job links:", JSON.stringify(allLinks));
       const jobLinks = await page.evaluate(() => {
         const links = document.querySelectorAll("a[href*='/job/']");
         const urls: string[] = [];
