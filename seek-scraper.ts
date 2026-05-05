@@ -121,12 +121,14 @@ async function scrapeSeekJobs() {
   console.log("Starting Seek scraper - Target: " + JOBS_PER_RUN + " jobs");
   console.log(new Date().toISOString());
 
+  const proxyUser = process.env.PROXY_USERNAME || "hfyqlaym";
+  const proxyPass = process.env.PROXY_PASSWORD || "7iz9d8vsyslp";
   const browser = await chromium.launch({
     headless: true,
     proxy: {
-      server: "http://p.webshare.io:3128",
-      username: process.env.PROXY_USERNAME || "hfyqlaym-au-5",
-      password: process.env.PROXY_PASSWORD || "7iz9d8vsyslp"
+      server: "http://p.webshare.io:80",
+      username: proxyUser + "-au-" + Math.floor(Math.random() * 20 + 1),
+      password: proxyPass
     },
     args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage", "--disable-blink-features=AutomationControlled"]
   });
