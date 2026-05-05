@@ -183,10 +183,12 @@ async function scrapeSeekJobs() {
         }
         await randomDelay(2000, 3000);
       } catch(e: any) {
-        console.log("Page load failed - retrying with new connection...");
-        await page.close();
+        console.log("Page load failed - skipping to next category");
+        try { await page.close(); } catch(e2) {}
         page = await context.newPage();
         await randomDelay(5000, 8000);
+        catIdx++;
+        pageNum = 1;
         continue;
       }
 
