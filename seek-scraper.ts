@@ -235,8 +235,8 @@ async function scrapeSeekJobs() {
         if ((totalImported + batch.length) >= JOBS_PER_RUN) break;
 
         try {
-          await randomDelay(3000, 6000);
-          await page.goto(jobUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
+          await randomDelay(5000, 8000);
+          await page.goto(jobUrl, { waitUntil: "domcontentloaded", timeout: 90000 });
           await randomDelay(2000, 4000);
 
           const jobData = await page.evaluate(() => {
