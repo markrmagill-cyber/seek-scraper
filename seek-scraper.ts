@@ -148,7 +148,7 @@ async function scrapeSeekJobs() {
     Object.defineProperty(navigator, "languages", { get: () => ["en-AU", "en"] });
   });
 
-  const page = await context.newPage();
+  let page = await context.newPage();
   let totalImported = 0;
   let totalSkipped = 0;
   let totalFailed = 0;
@@ -181,9 +181,10 @@ async function scrapeSeekJobs() {
         }
         await randomDelay(2000, 3000);
       } catch(e: any) {
-        console.log("Page load failed - moving to next category");
-        catIdx++;
-        pageNum = 1;
+        console.log("Page load failed - retrying with new connection...");
+        await page.close();
+        page = await context.newPage();
+        await randomDelay(5000, 8000);
         continue;
       }
 
