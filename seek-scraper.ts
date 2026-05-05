@@ -124,7 +124,7 @@ async function scrapeSeekJobs() {
   const browser = await chromium.launch({
     headless: true,
     proxy: {
-      server: "http://p.webshare.io:80",
+      server: "http://p.webshare.io:3128",
       username: process.env.PROXY_USERNAME || "hfyqlaym-au-5",
       password: process.env.PROXY_PASSWORD || "7iz9d8vsyslp"
     },
@@ -168,7 +168,7 @@ async function scrapeSeekJobs() {
       console.log("\nCategory: " + category + " Page: " + pageNum);
 
       try {
-        await page.goto(seekUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
+        await page.goto(seekUrl, { waitUntil: "domcontentloaded", timeout: 120000 });
         // Wait for Cloudflare challenge to pass
         await page.waitForTimeout(5000);
         const title = await page.title();
@@ -213,7 +213,7 @@ async function scrapeSeekJobs() {
         if ((totalImported + batch.length) >= JOBS_PER_RUN) break;
 
         try {
-          await page.goto(jobUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
+          await page.goto(jobUrl, { waitUntil: "domcontentloaded", timeout: 120000 });
           await randomDelay(2000, 3000);
 
           const jobData = await page.evaluate(() => {
