@@ -334,6 +334,14 @@ async function scrapeSeekJobs() {
         } catch(e: any) {
           console.log("  Failed: " + e.message);
           totalFailed++;
+          // Recreate page on tunnel failure
+          if (e.message.includes("TUNNEL") || e.message.includes("SSL") || e.message.includes("interrupted")) {
+            try {
+              await page.close();
+              page = await context.newPage();
+              await randomDelay(3000, 5000);
+            } catch(e2: any) {}
+          }
         }
       }
 
