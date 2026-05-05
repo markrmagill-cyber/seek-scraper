@@ -172,9 +172,12 @@ async function scrapeSeekJobs() {
         // Wait for Cloudflare challenge to pass
         await page.waitForTimeout(5000);
         const title = await page.title();
+        console.log("Page title: " + title);
         if (title.includes("moment") || title.includes("Just a")) {
-          console.log("Cloudflare detected - waiting 15 seconds...");
-          await page.waitForTimeout(15000);
+          console.log("Cloudflare detected - waiting 30 seconds...");
+          await page.waitForTimeout(30000);
+          const newTitle = await page.title();
+          console.log("Title after wait: " + newTitle);
         }
         await randomDelay(2000, 3000);
       } catch(e: any) {
