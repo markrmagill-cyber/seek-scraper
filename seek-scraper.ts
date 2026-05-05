@@ -202,7 +202,7 @@ async function scrapeSeekJobs() {
         const urls: string[] = [];
         links.forEach((a: any) => {
           const href = a.href || "";
-          if (href.includes("/job/") && href.includes("seek.com.au")) {
+          if (href.includes("/job/") && href.includes("seek.com")) {
             const clean = href.split("?")[0];
             if (!urls.includes(clean)) urls.push(clean);
           }
