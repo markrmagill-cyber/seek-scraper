@@ -126,9 +126,9 @@ async function scrapeSeekJobs() {
   const browser = await chromium.launch({
     headless: true,
     proxy: {
-      server: "http://92.113.55.153:49059",
-      username: "0hmesZ7ZtfSuAHu",
-      password: "SWP18w5Qz5i8zIN"
+      server: "http://gw.dataimpulse.com:823",
+      username: process.env.PROXY_USERNAME || "073b5744a0fa21c95fb1",
+      password: process.env.PROXY_PASSWORD || "1984120a000fd581"
     },
     args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage", "--disable-blink-features=AutomationControlled"]
   });
