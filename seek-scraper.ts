@@ -127,7 +127,7 @@ async function scrapeSeekJobs() {
     headless: true,
     proxy: {
       server: "http://gw.dataimpulse.com:823",
-      username: process.env.PROXY_USERNAME || "073b5744a0fa21c95fb1",
+      username: process.env.PROXY_USERNAME || "073b5744a0fa21c95fb1__cr.au",
       password: process.env.PROXY_PASSWORD || "1984120a000fd581"
     },
     args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage", "--disable-blink-features=AutomationControlled"]
