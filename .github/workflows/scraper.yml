@@ -9,15 +9,22 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
+        env:
+          ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+          
       - name: Install dependencies
         run: |
-          npm install playwright typescript ts-node @types/node
+          npm install playwright typescript ts-node@10.9.2 @types/node
           npx playwright install chromium --with-deps
+          
       - name: Run Scraper
         env:
           PROXY_USERNAME: ${{ secrets.PROXY_USERNAME }}
           PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }}
+          ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
         run: npx ts-node --project tsconfig.json seek-scraper.ts
